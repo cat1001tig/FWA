@@ -5,6 +5,14 @@
 #include <cmath>
 #include <iostream>
 
+SatelliteSchedulerSolution::SatelliteSchedulerSolution(const AlgorithmParams& params)
+    : SatelliteSchedulerBase(params) {
+    // 初始化边界
+    f1_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
+    f2_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
+    f3_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
+}
+
 std::vector<std::vector<int>> SatelliteSchedulerSolution::initializeSolution() {
     std::vector<std::vector<int>> solution;
     std::uniform_real_distribution<double> dist(0.0, 1.0);
@@ -40,7 +48,7 @@ SatelliteSchedulerSolution::EvaluationResult SatelliteSchedulerSolution::evaluat
 
     auto raw_result = evaluateRaw(solution);
 
-    if (update_bounds_) {
+    if (params_.update_bounds) {
         updateBounds(raw_result);
     }
 
@@ -84,14 +92,6 @@ SatelliteSchedulerSolution::EvaluationResult SatelliteSchedulerSolution::evaluat
 }
 
 
-
-SatelliteSchedulerSolution::SatelliteSchedulerSolution() {
-    // 初始化边界
-    f1_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
-    f2_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
-    f3_bounds_ = { std::numeric_limits<double>::max(), std::numeric_limits<double>::lowest() };
-}
-
 void SatelliteSchedulerSolution::setCoverageData(const std::map<int, std::vector<double>>& coverage_data) {
     coverage_data_ = coverage_data;
     std::cout << "设置覆盖率数据: " << coverage_data_.size() << " 颗卫星" << std::endl;
@@ -105,7 +105,7 @@ void SatelliteSchedulerSolution::setTimeIndices(const std::vector<std::vector<in
 double SatelliteSchedulerSolution::calculateCoverage(
     const std::vector<std::vector<int>>& solution, int j_original) {
 
-    std::vector<bool> combined(q_, false);
+    std::vector<bool> combined(params_.q, false);
     std::vector<int> active_sats;
 
     // 查找当前时间点活跃的卫星
@@ -157,10 +157,10 @@ double SatelliteSchedulerSolution::calculateCoverage(
             auto mesh_array = coverage_loader_->getMeshData(
                 sat + 1,  // 卫星编号转为1-based
                 j_original,
-                q_);
+                params_.q);
 
             // 将网格值取或运算
-            for (int i = 0; i < q_; ++i) {
+            for (int i = 0; i < params_.q; ++i) {
                 combined[i] = combined[i] || mesh_array[i];
             }
         }
@@ -171,7 +171,7 @@ double SatelliteSchedulerSolution::calculateCoverage(
             if (covered) coverage_count++;
         }
 
-        return static_cast<double>(coverage_count) / q_;
+        return static_cast<double>(coverage_count) / params_.q;
     }
 }
 
@@ -203,7 +203,7 @@ bool SatelliteSchedulerSolution::checkSwitches(const std::vector<std::vector<int
             // 检查状态切换
             if (sat_schedule[j] != sat_schedule[j - 1]) {
                 switches++;
-                if (switches > max_switches_) {
+                if (switches > params_.max_switches) {
                     return false;
                 }
             }

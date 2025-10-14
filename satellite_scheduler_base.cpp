@@ -5,7 +5,8 @@
 #include <iostream>
 #include <algorithm>
 
-SatelliteSchedulerBase::SatelliteSchedulerBase() : gen_(rd_()) {
+SatelliteSchedulerBase::SatelliteSchedulerBase(const AlgorithmParams& params)
+    : params_(params), gen_(rd_()) {
     // 构造函数初始化
 }
 
@@ -49,8 +50,8 @@ void SatelliteSchedulerBase::initializeCoverageLoader() {
     coverage_loader_ = std::make_unique<CoverageDataLoader>();
 
     // 预加载特殊卫星在特殊时间点的数据
-    std::vector<int> satellites = { 2, 4, 5 }; // 卫星编号
-    coverage_loader_->preloadAllData(satellites, special_times_);
+    std::vector<int> satellites = params_.satellites; // 卫星编号
+    coverage_loader_->preloadAllData(satellites, params_.special_times);
 
     std::cout << "覆盖率加载器初始化完成" << std::endl;
 }

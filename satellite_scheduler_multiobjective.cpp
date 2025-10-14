@@ -4,8 +4,8 @@
 #include <limits>
 #include <iostream>
 
-SatelliteSchedulerMultiObjective::SatelliteSchedulerMultiObjective() {
-    // 构造函数
+SatelliteSchedulerMultiObjective::SatelliteSchedulerMultiObjective(const AlgorithmParams& params)
+    : SatelliteSchedulerFireworks(params) {
 }
 
 std::unordered_map<int, std::vector<std::vector<std::vector<int>>>>
@@ -175,9 +175,9 @@ std::pair<std::vector<std::vector<std::vector<int>>>,
 
         for (const auto& fw : fireworks) {
             auto eval_result = evaluate(fw, true);
-            double value = weights_[0] * -eval_result.satellite_count +
-                weights_[1] * eval_result.coverage +
-                weights_[2] * -eval_result.load_variance;
+            double value = params_.weights[0] * -eval_result.satellite_count +
+                params_.weights[1] * eval_result.coverage +
+                params_.weights[2] * -eval_result.load_variance;
 
             value_min = std::min(value_min, value);
             value_max = std::max(value_max, value);
@@ -187,13 +187,13 @@ std::pair<std::vector<std::vector<std::vector<int>>>,
         // 为每个烟花产生火花
         for (const auto& fw : fireworks) {
             auto eval_result = evaluate(fw, true);
-            double value = weights_[0] * -eval_result.satellite_count +
-                weights_[1] * eval_result.coverage +
-                weights_[2] * -eval_result.load_variance;
+            double value = params_.weights[0] * -eval_result.satellite_count +
+                params_.weights[1] * eval_result.coverage +
+                params_.weights[2] * -eval_result.load_variance;
 
             // 计算产生的火花数量
             int num = static_cast<int>(std::round(
-                max_sparks_ * (value - value_min + std::numeric_limits<double>::epsilon()) /
+                params_.max_sparks * (value - value_min + std::numeric_limits<double>::epsilon()) /
                 (value_sum - size * value_min + std::numeric_limits<double>::epsilon())));
 
             // 确保至少产生一个火花
@@ -230,10 +230,10 @@ std::pair<std::vector<std::vector<std::vector<int>>>,
         std::vector<std::vector<std::vector<int>>> selected;
         int current_rank = 1;
 
-        while (selected.size() < num_fireworks + max_sparks_ &&
+        while (selected.size() < num_fireworks + params_.max_sparks &&
             ranked.find(current_rank) != ranked.end()) {
 
-            int needed = num_fireworks + max_sparks_ - selected.size();
+            int needed = num_fireworks + params_.max_sparks - selected.size();
             auto& available = ranked[current_rank];
 
             if (available.size() > needed) {

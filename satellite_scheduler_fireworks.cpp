@@ -3,8 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
-SatelliteSchedulerFireworks::SatelliteSchedulerFireworks() {
-    // 构造函数
+SatelliteSchedulerFireworks::SatelliteSchedulerFireworks(const AlgorithmParams& params)
+    : SatelliteSchedulerSolution(params) {
 }
 
 std::vector<std::vector<std::vector<int>>> SatelliteSchedulerFireworks::explode(
@@ -24,9 +24,9 @@ std::vector<std::vector<std::vector<int>>> SatelliteSchedulerFireworks::explode(
 
         // 评估当前解
         auto eval_result = evaluate(new_sol, true);
-        double value = weights_[0] * -eval_result.satellite_count +
-            weights_[1] * eval_result.coverage +
-            weights_[2] * -eval_result.load_variance;
+        double value = params_.weights[0] * -eval_result.satellite_count +
+            params_.weights[1] * eval_result.coverage +
+            params_.weights[2] * -eval_result.load_variance;
 
         // 计算概率p
         double p = (fmax - value + epsilon) / (fmax * size - fsum + epsilon);
@@ -56,7 +56,7 @@ std::vector<std::vector<std::vector<int>>> SatelliteSchedulerFireworks::explode(
 
             // 寻找最长连续序列
             int longest_seq = findLongestSequence(new_sol[sat]);
-            max_length = std::min(longest_seq, max_length_);
+            max_length = std::min(longest_seq, params_.max_length);
 
             // 选择时间窗口进行修改
             if (max_length >= 2) {
