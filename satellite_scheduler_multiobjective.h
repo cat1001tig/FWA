@@ -5,7 +5,8 @@
 
 class SatelliteSchedulerMultiObjective : public SatelliteSchedulerFireworks {
 public:
-    SatelliteSchedulerMultiObjective();
+    // 修改构造函数以接受参数
+    SatelliteSchedulerMultiObjective(const AlgorithmParams& params = AlgorithmParams());
 
     // 多目标优化
     std::unordered_map<int, std::vector<std::vector<std::vector<int>>>>

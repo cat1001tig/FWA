@@ -6,7 +6,8 @@
 
 class SatelliteSchedulerFireworks : public SatelliteSchedulerSolution {
 public:
-    SatelliteSchedulerFireworks();
+    // 修改构造函数以接受参数
+    SatelliteSchedulerFireworks(const AlgorithmParams& params = AlgorithmParams());
 
     // 爆炸和变异操作
     std::vector<std::vector<std::vector<int>>> explode(
