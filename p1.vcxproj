@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{9106fabb-843f-4258-ad7e-fbab91ebf521}</ProjectGuid>
+    <RootNamespace>p1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="satellite_scheduler_fireworks.h" />
+    <ClInclude Include="satellite_scheduler_multiobjective.h" />
+    <ClInclude Include="satellite_scheduler_solution.h" />
+    <ClInclude Include="coverage_loader.h" />
+    <ClInclude Include="csv_parser.h" />
+    <ClInclude Include="csv_reader_optimized.h" />
+    <ClInclude Include="satellite_data_loader.h" />
+    <ClInclude Include="satellite_scheduler_base.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="coverage_loader.cpp" />
+    <ClCompile Include="satellite_data_loader.cpp" />
+    <ClCompile Include="satellite_scheduler_base.cpp" />
+    <ClCompile Include="satellite_scheduler_fireworks.cpp" />
+    <ClCompile Include="satellite_scheduler_multiobjective.cpp" />
+    <ClCompile Include="satellite_scheduler_solution.cpp" />
+    <ClCompile Include="test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_263.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_264.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_265.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_266.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_267.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_268.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_269.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_270.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_271.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_272.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s4_449.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_263.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_264.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_265.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_266.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_267.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_268.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_269.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_270.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_271.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_272.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_449.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_1.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_10.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_2.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_3.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_4.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_5.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_6.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_7.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_8.csv" />
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_9.csv" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

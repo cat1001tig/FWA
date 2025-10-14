@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="satellite_data_loader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="csv_parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="coverage_loader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="csv_reader_optimized.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="satellite_scheduler_base.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="satellite_scheduler_solution.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="satellite_scheduler_fireworks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="satellite_scheduler_multiobjective.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="satellite_data_loader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="coverage_loader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="satellite_scheduler_base.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="satellite_scheduler_solution.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="satellite_scheduler_fireworks.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="satellite_scheduler_multiobjective.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_10.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_263.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_264.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_265.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_266.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_267.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_268.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_269.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_270.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_271.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s2_272.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s4_449.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_263.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_264.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_265.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_266.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_267.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_268.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_269.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_270.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_271.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_272.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\s5_449.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_1.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_2.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_3.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_4.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_5.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_6.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_7.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_8.csv">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\..\FWA_paleto\FWA_paleto\satellite_9.csv">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+</Project>
