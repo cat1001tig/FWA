@@ -9,11 +9,38 @@
 int main() {
     
     try {
+        // 0. 设置算法参数
+        AlgorithmParams params;
+        params.max_switches = 8;
+        params.q = 6665;
+        params.weights = { 0.34, 0.33, 0.33 };
+        params.max_sparks = 30;
+        params.max_length = 10;
+        params.update_bounds = true;
+        params.max_variation = 3;
+        params.special_times = { 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 449 };
+        int starthour = 8; //观测时间的起始小时
+        int startminute = 0; //观测时间的起始分钟
+        int startsecond = 0; //观测时间的起始秒
+        int endhour = 20; //观测时间的结束小时
+        int endminute = 0; //观测时间的结束分钟
+        int endsecond = 0; //观测时间的结束秒
+
+        int endSeconds = endhour * 3600 + endminute * 60 + endsecond;
+        int startSeconds = starthour * 3600 + startminute * 60 + startsecond;
+        int diffSeconds = endSeconds - startSeconds;
+        // 假设不会跨天，(如果需要，则加24*3600来处理跨天)
+        int diffMinutes = diffSeconds / 60; // 向下取整
+
+        params.num_satellites_ = 10;
+        params.total_minutes_ = diffMinutes + 1; // 12*60 + 1
+
+
         ////////////////////////1.数据加载
         SatelliteDataLoader dloader;
 
         // 加载数据（假设CSV文件已准备好）
-        if (dloader.loadDataFromExcel("dummy_path")) {
+        if (dloader.loadDataFromExcel(params.directoryPath)) {
             // 保存压缩数据
             dloader.saveCompressedData("compressed_example_3.0.txt");
 
@@ -42,7 +69,7 @@ int main() {
         std::vector<int> satellites = { 2, 4, 5 };
         std::vector<int> special_times = { 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 449 };
 
-        cloader.preloadAllData(satellites, special_times);
+        cloader.preloadAllData(satellites, special_times, "");
 
         // ****测试获取网格数据****
         std::vector<bool> mesh_data = cloader.getMeshData(2, 263, 6665);
@@ -110,7 +137,7 @@ int main() {
         ///////////////////////////测试结束，正式开始调度//////////////////////////////
         std::cout << std::endl << std::endl << "测试结束，正式开始调度：" << std::endl;
         //创建调度器，SatelliteSchedulerMultiObjective继承自satellite_scheduler_fireworks，satellite_scheduler_fireworks继承自satellite_scheduler_solution
-        SatelliteSchedulerMultiObjective scheduler;
+        SatelliteSchedulerMultiObjective scheduler(params);
         if (!scheduler.loadCompressedData("compressed_example_3.0.txt")) {
             std::cerr << "压缩数据加载失败" << std::endl;
             return 1;
@@ -134,6 +161,16 @@ int main() {
                 << ", 覆盖率=" << eval_result.coverage / 100 << "%"
                 << ", 平均每时间片覆盖率=" << eval_result.coverage / cnt_times
                 << ", 负载方差=" << eval_result.load_variance << std::endl;
+
+            std::vector<int> bo = dloader.getBounds();//压缩后的索引对应的原始索引
+
+            std::cout << "解" << i + 1 << "方案：" << std::endl;
+            for (int s = 0; s < best_solutions[i].size(); s++) {
+                for (int t = 0; t < best_solutions[i][s].size(); t++) {
+                    std::cout << best_solutions[i][s][t] << " ";
+                }
+                std::cout << std::endl;
+            }
         }
     }
     catch (const std::exception& e) {

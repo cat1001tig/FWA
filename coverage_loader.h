@@ -27,8 +27,8 @@ private:
     };
 
 public:
-    CoverageDataLoader(const std::string& data_dir = "mesh_data");
-    void preloadAllData(const std::vector<int>& satellites, const std::vector<int>& special_times);
+    CoverageDataLoader(const std::string& data_dir = "");
+    void preloadAllData(const std::vector<int>& satellites, const std::vector<int>& special_times, const std::string& data_dir);
     std::vector<bool> getMeshData(int sat, int time, int q);
 
     int getQ() const { return q_; }
