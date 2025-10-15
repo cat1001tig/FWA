@@ -6,7 +6,8 @@
 
 class SatelliteSchedulerSolution : public SatelliteSchedulerBase {
 public:
-    SatelliteSchedulerSolution();
+    // 修改构造函数以接受参数
+    SatelliteSchedulerSolution(const AlgorithmParams& params = AlgorithmParams());
 
     // 设置数据方法
     void setCoverageData(const std::map<int, std::vector<double>>& coverage_data);

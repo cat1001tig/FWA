@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include "satellite_scheduler_base.h"
 
 class SatelliteDataLoader {
 private:
@@ -19,14 +20,19 @@ private:
 
         TimePoint(int h = 0, int m = 0, int s = 0) : hour(h), minute(m), second(s) {}
 
-        int toMinutesSince8AM() const {
-            return (hour - 8) * 60 + minute + second / 60;
+        int toMinutesSincestartAM(int startHour, int startMinute, int startSecond) {
+            int currentSeconds = hour * 3600 + minute * 60 + second;
+            int startSeconds = startHour * 3600 + startMinute * 60 + startSecond;
+            int diffSeconds = currentSeconds - startSeconds;
+            // 假设不会跨天，(如果需要，则加24*3600来处理跨天)
+            int diffMinutes = diffSeconds / 60; // 向下取整
+            return diffMinutes;
         }
     };
 
 public:
-    SatelliteDataLoader();
-    bool loadDataFromExcel(const std::string& excelPath);
+    SatelliteDataLoader(const AlgorithmParams& params = AlgorithmParams());
+    bool loadDataFromExcel(const std::string& directoryPath);
     void saveCompressedData(const std::string& filename = "compressed_example_3.0.txt");
 
     const std::vector<std::vector<int>>& getWindowMatrix() const { return window_; }
@@ -47,6 +53,7 @@ private:
     std::map<int, std::vector<double>> coverage_data_; // 覆盖率数据
     std::vector<std::vector<int>> idx_;              // 时间索引
 
-    const int num_satellites_ = 10;
-    const int total_minutes_ = 721; // 12*60 + 1
+    // 算法参数 - 现在通过构造函数设置
+    AlgorithmParams params_;
+
 };
