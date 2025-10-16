@@ -1,91 +1,91 @@
-编译环境说明：
+the provided compilation and usage instructions for the scheduling algorithm:
 
-内含csv文件处理需使用C++17以上进行编译
+Compilation environment notes:
 
+The project must be compiled with C++17 or newer.
+I. Data
 
-一、数据
+Two types of data are required:
 
-共需要卫星时间窗口数据和重叠时间窗口下多个卫星在该时间点观测目标的网格点覆盖情况两种。两种文件的路径需要在参数中指明文件位置。文件格式为csv。
+Satellite time-window data
+Grid-point coverage data at overlapping time windows for multiple satellites at each time point
+Paths to these files must be specified in the parameters. Both files are in CSV format.
+Satellite time-window data file
+Filename: satellite_1.csv
+File content format: "1 May 2025,08:23:00.000,6.57,6.57"
 
-1.卫星时间窗口数据文件格式
+Grid-point data
+Filename: s2_263.csv
+Divide the observation time segment into time points with a step of 1. The label "s2_263" indicates that the current time point is 263 hours, and satellites 2 and 5 are scheduled (powered on) to observe concurrently (multi-satellite joint scheduling).
 
-文件名：satellite_1.csv
+File content: The grid points are listed in order of latitude and longitude, top to bottom, containing only a single column of data. A value of 1 means the grid point is observed; 0 means it is not observed.
 
-文件内容格式：1 May 2025,08:23:00.000,6.57,6.57
+II. Dynamic Library usage of the algorithm
 
-2.网格点数据
+Basic configuration
+Place FWADll.dll and FWADll.lib in the same directory as the test files. If you are using Visual Studio, specify the project properties: Linker -> Additional Library Directories and set it to the path where FWADll.lib resides.
 
-文件名：s2_263.csv。将观测时间段按照时间步长为1划分为时间点，”s2_263”表示当前时间点为263时，卫星2和卫星5在该时间点同时调度（开机）观测，即处理多星联合调度的情况。
+Calling the algorithm
+The algorithm exposes the following callable interfaces (functions):
 
-文件内容：按照观测目标网格的经纬度顺序自上而下，只包含一列数据，代表当前经纬度所代表的网格是否被观测到，观测到值为1，未观测到值为0。
+(1) Parameter setting
+You can configure the following parameters:
 
+int max_switches = 5; // maximum number of consecutive on/off switches for satellites (constraint)
+int q = 6665; // number of grid points for observation targets
+std::vector<double> weights = { 0.34, 0.33, 0.33 }; // objective function weights (number of satellites turned on, coverage, load balancing)
+int max_sparks = 30; // maximum number of sparks
+int max_length = 10; // maximum length of a mutation-adjusted decision window
+bool update_bounds = true; // update the fireworks explosion boundary (enabled by default)
+int max_variation = 3; // maximum number of variations
 
-二、算法的动态链接库使用
+std::vector<int> special_times = { 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 449 }; // time points with overlapping windows
+std::vector<int> satellites = { 2, 4, 5 }; // satellite identifiers
 
-1.基本配置
-
-将FWADll.dll和FWADll.lib文件放置在测试文件的同一目录下，如果使的IDE是VisualStudio，需要指定项目->属性->链接器->附加库目录：设置为FWADll.lib的路径。
-
-2.调用算法
-
-算法向外暴露了（可调用）：设置算法参数，执行调度，获取调度任务优化后的结果的方法（函数）。
-
-（1）算法参数设置：
-
-可设置的参数有
-
-int max_switches = 5;//最大连续切换卫星开关机状态的个数（约束条件）
-
-int q = 6665;//观测目标网格化的网格个数
-
-std::vector<double> weights = { 0.34, 0.33, 0.33 };//目标函数（卫星开机数，覆盖率，负载均衡）的权重
-
-int max_sparks = 30;//最大产生火花数
-
-int max_length = 10;//最大变异调整决策的时间窗口长度
-
-bool update_bounds = true;//更新火花爆炸边界，默认开启
-
-int max_variation = 3;//最大变异次数
-
-std::vector<int> special_times = { 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 449 };//时间窗口重叠的时间点
-
-std::vector<int> satellites = { 2, 4, 5 }; // 卫星编号
-
-int num_satellites_ = 10;//卫星数量
-
+int num_satellites_ = 10; // total number of satellites
 int total_minutes_ = 721; // 12*60 + 1
 
-int starthour = 8; //观测时间的起始小时
+int starthour = 8; // observation start hour
+int startminute = 0; // observation start minute
+int startsecond = 0; // observation start second
 
-int startminute = 0; //观测时间的起始分钟
+int endhour = 20; // observation end hour
+int endminute = 0; // observation end minute
+int endsecond = 0; // observation end second
 
-int startsecond = 0; //观测时间的起始秒
+std::string directoryPath = ""; // path to time-window file
+std::string data_dir_ = ""; // path to per-satellite grid data for overlapping observation times
 
-int endhour = 20; //观测时间的结束小时
+(2) Executing the scheduling
 
-int endminute = 0; //观测时间的结束分钟
+Step 1: Prepare the scheduling result receiver, and initialize it
 
-int endsecond = 0; //观测时间的结束秒
+Step 2: Create the scheduler by calling CreateScheduler, passing the configured parameters
 
-std::string directoryPath = "";//时间窗口文件路径
+Step 3: Prepare the scheduling result receiver
 
-std::string data_dir_ = "";//重叠观测时间点各卫星网格的文件路径
+Step 4: Execute scheduling by calling ExecuteScheduling, with the following parameters:
 
-（2）执行调度
+the scheduler instance
+the storage name for the processed data files
+the number of iterations
+the initial number of firework individuals
+the total number of decision points for all satellites that can vary in mutation (controls the mutation amplitude)
+the scheduling result receiver
+(3) Obtaining the scheduling results
 
-Step1 准备调度结果接收变量SchedulingResult，并初始化
+Step 1: Get the number of optimal solutions by calling GetSolutionCount, with the scheduler as the parameter
 
-Step2 创建调度器，使用创建函数CreateScheduler，传入设置好的参数
+Step 2: Retrieve details for each optimal solution, including:
 
-Step3 准备调度结果接收变量
+solution index
+number of satellites turned on in this schedule
+coverage
+load variance
+Step: Output all optimal solutions: for each time point within the observation window, the decision status of each satellite (0 = off, 1 = on, -1 = no time window for that satellite). You can use this information to plot visualization results.
 
-Step3 执行调度，使用调度函数ExecuteScheduling，传入参数：调度器，数据文件处理后的存储名称，迭代次数，初始烟花个体数，变异算子单解对所有卫星的决策点可变异的总个数（用于控制变异幅度，范围在0~总时间窗口处理为1时间点的个数），调度结果接收变量。
+Notes:
 
-（3）获取调度结果
-
-Step1 获取产生的最优解个数GetSolutionCount，参数为调度器
-
-Step2 获取每个最优解的详细信息，包括解的序号、该调度方案的卫星开机个数、覆盖率、负载方差；
-
-Step 输出所有最优解：每个卫星在观测时间段内每个时间点的决策情况（0表示不开机，1表示开机，-1表示该卫星在某时间点无时间窗口），可根据上述解的信息自行绘制可视化结果图。
+Ensure the CSV files satellite_1.csv and s2_263.csv are correctly formatted as described.
+The parameter values above are example defaults; adjust them as needed for your use case.
+The dynamic library should be linked properly in your build environment (Visual Studio: specify the appropriate lib path; other environments: ensure the library is discoverable at runtime/link time).
