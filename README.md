@@ -135,10 +135,20 @@ Step: Output all optimal solutions: for each time point within the observation w
 
 
 
-Notes:
+III. Notes:
 
 Ensure the CSV files satellite_1.csv and s2_263.csv are correctly formatted as described.
 
 The parameter values above are example defaults; adjust them as needed for your use case.
 
 The dynamic library should be linked properly in your build environment (Visual Studio: specify the appropriate lib path; other environments: ensure the library is discoverable at runtime/link time).
+
+
+IV. Screenshot of the sample run results：
+<img width="2551" height="1215" alt="image" src="https://github.com/user-attachments/assets/351d5d31-09a0-444a-b387-772c22a5939e" />
+
+<img width="2555" height="687" alt="屏幕截图 2025-10-16 155743" src="https://github.com/user-attachments/assets/22e617dc-11cb-4ba7-8c46-3b6f4eb340cd" />
+
+<img width="2527" height="1384" alt="屏幕截图 2025-10-16 155719" src="https://github.com/user-attachments/assets/c8c1fde2-ab11-4076-a3d6-c5bf83efefa4" />
+
+
