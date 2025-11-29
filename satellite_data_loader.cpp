@@ -4,16 +4,18 @@
 #include <regex>
 #include <stdexcept>
 #include "csv_parser.h"
+#include <filesystem> // C++17
 
-SatelliteDataLoader::SatelliteDataLoader() {
+SatelliteDataLoader::SatelliteDataLoader(const AlgorithmParams& params)
+    : params_(params) {
     // 初始化窗口矩阵
-    window_.resize(num_satellites_, std::vector<int>(total_minutes_, -1));
-    idx_.resize(num_satellites_);
+    window_.resize(params_.num_satellites_, std::vector<int>(params_.total_minutes_, -1));
+    idx_.resize(params_.num_satellites_);
 }
 
 int SatelliteDataLoader::parseTimeToMinutes(const std::string& timeStr) {
     auto timePoint = safeParseTime(timeStr);
-    return timePoint.toMinutesSince8AM();
+    return timePoint.toMinutesSincestartAM(params_.starthour, params_.startminute, params_.startsecond);
 }
 
 SatelliteDataLoader::TimePoint SatelliteDataLoader::safeParseTime(const std::string& timeStr) {
@@ -73,14 +75,21 @@ SatelliteDataLoader::TimePoint SatelliteDataLoader::safeParseTime(const std::str
     return TimePoint(-1, -1, -1); // 解析失败
 }
 
-bool SatelliteDataLoader::loadDataFromExcel(const std::string& excelPath) {
+bool SatelliteDataLoader::loadDataFromExcel(const std::string& directoryPath) {
     std::cout << "开始加载卫星数据..." << std::endl;
-
+    std::string file;
     for (int i = 1; i <= 10; ++i) {
-        std::string filename = "satellite_" + std::to_string(i) + ".csv";
+        if (directoryPath != "") {
+            std::filesystem::path dir(directoryPath);
+            std::filesystem::path filename("satellite_" + std::to_string(i) + ".csv");
+            std::filesystem::path fullPath = dir / filename;
+            file = fullPath.string();
+        }
+
+        file = "satellite_" + std::to_string(i) + ".csv";
 
         try {
-            auto csv_data = CSVParser::parseCSV(filename);
+            auto csv_data = CSVParser::parseCSV(file);
 
             // 跳过标题行（如果有）
             size_t start_row = 0;
@@ -120,7 +129,7 @@ bool SatelliteDataLoader::loadDataFromExcel(const std::string& excelPath) {
 
             // 填充窗口矩阵
             for (int time_index : time_indices) {
-                if (time_index >= 0 && time_index < total_minutes_) {
+                if (time_index >= 0 && time_index < params_.total_minutes_) {
                     window_[satellite_index][time_index] = 1;
                 }
             }
@@ -130,7 +139,7 @@ bool SatelliteDataLoader::loadDataFromExcel(const std::string& excelPath) {
 
         }
         catch (const std::exception& e) {
-            std::cerr << "加载文件 " << filename << " 错误: " << e.what() << std::endl;
+            std::cerr << "加载文件 " << file << " 错误: " << e.what() << std::endl;
             continue;
         }
     }
@@ -146,10 +155,10 @@ void SatelliteDataLoader::compressTimeWindows() {
     std::cout << "开始压缩时间窗口..." << std::endl;
 
     // 找到所有为-1的列
-    std::vector<bool> all_minus_one_columns(total_minutes_, true);
+    std::vector<bool> all_minus_one_columns(params_.total_minutes_, true);
 
-    for (int col = 0; col < total_minutes_; ++col) {
-        for (int row = 0; row < num_satellites_; ++row) {
+    for (int col = 0; col < params_.total_minutes_; ++col) {
+        for (int row = 0; row < params_.num_satellites_; ++row) {
             if (window_[row][col] != -1) {
                 all_minus_one_columns[col] = false;
                 break;
@@ -158,22 +167,22 @@ void SatelliteDataLoader::compressTimeWindows() {
     }
 
     // 收集非全-1列的索引
-    for (int col = 0; col < total_minutes_; ++col) {
+    for (int col = 0; col < params_.total_minutes_; ++col) {
         if (!all_minus_one_columns[col]) {
             bounds_.push_back(col);
         }
     }
 
     // 创建压缩矩阵
-    compressed_.resize(num_satellites_);
-    for (int row = 0; row < num_satellites_; ++row) {
+    compressed_.resize(params_.num_satellites_);
+    for (int row = 0; row < params_.num_satellites_; ++row) {
         compressed_[row].reserve(bounds_.size());
         for (int bound : bounds_) {
             compressed_[row].push_back(window_[row][bound]);
         }
     }
 
-    std::cout << "时间窗口压缩完成，原始列数: " << total_minutes_
+    std::cout << "时间窗口压缩完成，原始列数: " << params_.total_minutes_
         << ", 压缩后列数: " << bounds_.size() << std::endl;
 }
 

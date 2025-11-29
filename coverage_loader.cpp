@@ -8,15 +8,24 @@ CoverageDataLoader::CoverageDataLoader(const std::string& data_dir)
     : data_dir_(data_dir), gen_(rd_()), dist_(0.5) {}
 
 void CoverageDataLoader::preloadAllData(const std::vector<int>& satellites,
-    const std::vector<int>& special_times) {
+    const std::vector<int>& special_times, const std::string& data_dir) {
     std::cout << "开始预加载网格数据..." << std::endl;
 
     int loaded_count = 0;
     int error_count = 0;
+    std::string fileroute;
 
     for (int sat : satellites) {
         for (int time : special_times) {
             std::string filename = makeFilename(sat, time);
+            if (data_dir_ != "") {
+                std::filesystem::path dir(data_dir_);
+                std::filesystem::path file(filename);
+                std::filesystem::path fullPath = dir / file;
+                fileroute = fullPath.string();
+            }
+
+            fileroute = filename;
             std::string filepath = filename;
 
             CacheKey key{ sat, time };
